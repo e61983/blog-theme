@@ -79,7 +79,8 @@ function addCopyButtonsToCodeBlocks() {
         
         // Copy functionality
         copyButton.addEventListener('click', function() {
-            const textToCopy = codeBlock.textContent;
+            // Get text content excluding line numbers
+            const textToCopy = getCodeContentWithoutLineNumbers(codeBlock);
             
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
@@ -92,6 +93,60 @@ function addCopyButtonsToCodeBlocks() {
             }
         });
     });
+}
+
+// Extract code content without line numbers
+function getCodeContentWithoutLineNumbers(codeBlock) {
+    // Clone the code block to avoid modifying the original
+    const clone = codeBlock.cloneNode(true);
+    
+    // Remove line number elements (Chroma generates these with class 'ln' or 'lnt')
+    const lineNumbers = clone.querySelectorAll('.ln, .lnt, .lnlinks');
+    lineNumbers.forEach(function(lineNumber) {
+        lineNumber.remove();
+    });
+    
+    // Also handle the case where line numbers are in table structure
+    const lineNumberTables = clone.querySelectorAll('.lntable .lntd:first-child');
+    lineNumberTables.forEach(function(td) {
+        td.remove();
+    });
+    
+    // Get the text content
+    let textContent = clone.textContent || clone.innerText || '';
+    
+    // Clean up the text - remove empty lines at the beginning and end
+    textContent = textContent.replace(/^\n+|\n+$/g, '');
+    
+    // If the content is still empty or only contains line numbers, 
+    // fall back to a simpler approach
+    if (!textContent.trim()) {
+        // Try to get content by excluding elements with line number classes
+        const lines = [];
+        const textLines = (codeBlock.textContent || '').split('\n');
+        
+        // Simple heuristic: if line starts with numbers followed by whitespace,
+        // try to extract just the code part
+        textLines.forEach(function(line) {
+            // Match pattern: optional whitespace + numbers + whitespace + actual code
+            const match = line.match(/^\s*\d+\s+(.*)$/);
+            if (match) {
+                lines.push(match[1]);
+            } else if (line.trim() && !/^\s*\d+\s*$/.test(line)) {
+                // If line doesn't match number pattern and isn't just numbers, include it
+                lines.push(line);
+            }
+        });
+        
+        if (lines.length > 0) {
+            textContent = lines.join('\n');
+        } else {
+            // Final fallback - use original text content
+            textContent = codeBlock.textContent || '';
+        }
+    }
+    
+    return textContent;
 }
 
 // Fallback copy method for older browsers
