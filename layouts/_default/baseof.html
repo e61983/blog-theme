@@ -38,13 +38,14 @@
     {{ $style := resources.Get "yuan/css/main.css" | resources.Minify }}
     <link rel="stylesheet" href="{{ $style.Permalink }}">
     
+    <!-- Chroma Syntax Highlighting -->
+    {{ $chroma := resources.Get "yuan/css/chroma.css" | resources.Minify }}
+    <link rel="stylesheet" href="{{ $chroma.Permalink }}">
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Syntax Highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 </head>
 <body class="theme-dark">
     <div class="layout">
@@ -63,10 +64,6 @@
     <!-- JavaScript -->
     {{ $js := resources.Get "yuan/js/main.js" | resources.Minify }}
     <script src="{{ $js.Permalink }}"></script>
-    
-    <!-- Syntax Highlighting -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
     
     <!-- Analytics -->
     {{ if .Site.Params.googleAnalytics }}
