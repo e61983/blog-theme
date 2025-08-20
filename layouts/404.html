@@ -1,0 +1,46 @@
+{{ define "main" }}
+<div class="container">
+    <div class="error-page">
+        <div class="error-content">
+            <h1 class="error-title">404</h1>
+            <h2 class="error-subtitle">頁面不存在</h2>
+            <p class="error-description">
+                很抱歉，您訪問的頁面不存在或已被移動。<br>
+                請檢查 URL 是否正確，或返回首頁繼續瀏覽。
+            </p>
+            
+            <div class="error-actions">
+                <a href="{{ .Site.BaseURL }}" class="btn btn-primary">返回首頁</a>
+                <a href="/posts/" class="btn btn-secondary">瀏覽文章</a>
+            </div>
+            
+            <!-- Search -->
+            <div class="error-search">
+                <h3>或者搜尋您想要的內容：</h3>
+                <div class="search-suggestions">
+                    <h4>熱門分類：</h4>
+                    <div class="quick-links">
+                        {{ range first 5 .Site.Taxonomies.categories.ByCount }}
+                            <a href="{{ "/categories/" | relURL }}{{ .Page.Title | urlize }}" class="quick-link">
+                                {{ .Page.Title }}
+                            </a>
+                        {{ end }}
+                    </div>
+                </div>
+                
+                <div class="recent-posts">
+                    <h4>最新文章：</h4>
+                    <ul class="error-post-list">
+                        {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+                            <li>
+                                <a href="{{ .Permalink }}">{{ .Title }}</a>
+                                <time>{{ .Date.Format "2006-01-02" }}</time>
+                            </li>
+                        {{ end }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}

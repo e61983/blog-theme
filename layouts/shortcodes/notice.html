@@ -1,0 +1,43 @@
+{{- $type := .Get "type" | default "info" -}}
+{{- $icon := .Get "icon" | default "" -}}
+{{- $title := .Get "title" | default "" -}}
+
+<div class="notice notice-{{ $type }}">
+    <div class="notice-header">
+        {{- if $icon }}
+            <span class="notice-icon">{{ $icon }}</span>
+        {{- else }}
+            {{- if eq $type "warning" }}
+                <span class="notice-icon">⚠️</span>
+            {{- else if eq $type "danger" }}
+                <span class="notice-icon">🚨</span>
+            {{- else if eq $type "success" }}
+                <span class="notice-icon">✅</span>
+            {{- else if eq $type "tip" }}
+                <span class="notice-icon">💡</span>
+            {{- else }}
+                <span class="notice-icon">ℹ️</span>
+            {{- end }}
+        {{- end }}
+        
+        {{- if $title }}
+            <span class="notice-title">{{ $title }}</span>
+        {{- else }}
+            {{- if eq $type "warning" }}
+                <span class="notice-title">警告</span>
+            {{- else if eq $type "danger" }}
+                <span class="notice-title">危險</span>
+            {{- else if eq $type "success" }}
+                <span class="notice-title">成功</span>
+            {{- else if eq $type "tip" }}
+                <span class="notice-title">提示</span>
+            {{- else }}
+                <span class="notice-title">資訊</span>
+            {{- end }}
+        {{- end }}
+    </div>
+    
+    <div class="notice-content">
+        {{ .Inner | markdownify }}
+    </div>
+</div>

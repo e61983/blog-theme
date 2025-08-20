@@ -1,0 +1,101 @@
+[readingTime]
+other = "{{ .Count }} 分鐘閱讀"
+
+[wordCount]
+other = "{{ .Count }} 字"
+
+[pageviews]
+other = "{{ .Count }} 次瀏覽"
+
+[previousPage]
+other = "上一頁"
+
+[nextPage]
+other = "下一頁"
+
+[previousPost]
+other = "上一篇"
+
+[nextPost]
+other = "下一篇"
+
+[readMore]
+other = "繼續閱讀"
+
+[allCategories]
+other = "所有分類"
+
+[allTags]
+other = "所有標籤"
+
+[archive]
+other = "歸檔"
+
+[posts]
+other = "文章"
+
+[home]
+other = "首頁"
+
+[about]
+other = "關於"
+
+[contact]
+other = "聯絡"
+
+[search]
+other = "搜尋"
+
+[searchResults]
+other = "搜尋結果"
+
+[noResults]
+other = "沒有找到相關結果"
+
+[tableOfContents]
+other = "目錄"
+
+[backToTop]
+other = "返回頂部"
+
+[copyCode]
+other = "複製代碼"
+
+[copied]
+other = "已複製"
+
+[publishedOn]
+other = "發布於"
+
+[lastModified]
+other = "最後更新"
+
+[author]
+other = "作者"
+
+[tags]
+other = "標籤"
+
+[categories]
+other = "分類"
+
+[relatedPosts]
+other = "相關文章"
+
+[sharePost]
+other = "分享文章"
+
+[edit]
+other = "編輯"
+
+[errorPageTitle]
+other = "頁面不存在"
+
+[errorPageDescription]
+other = "很抱歉，您訪問的頁面不存在或已被移動。"
+
+[poweredBy]
+other = "由 {{ .Hugo }} 和 {{ .Theme }} 強力驅動"
+
+[builtWith]
+other = "使用 {{ .Technology }} 構建"

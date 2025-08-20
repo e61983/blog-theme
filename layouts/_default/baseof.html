@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang | default "zh-tw" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+    
+    <!-- Meta Description -->
+    {{ if .Description }}
+        <meta name="description" content="{{ .Description }}">
+    {{ else if .Site.Params.description }}
+        <meta name="description" content="{{ .Site.Params.description }}">
+    {{ end }}
+    
+    <!-- Meta Keywords -->
+    {{ if .Params.keywords }}
+        <meta name="keywords" content="{{ delimit .Params.keywords "," }}">
+    {{ else if .Site.Params.keywords }}
+        <meta name="keywords" content="{{ delimit .Site.Params.keywords "," }}">
+    {{ end }}
+    
+    <!-- Author -->
+    <meta name="author" content="{{ .Site.Params.author | default "Yuan" }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Title }}">
+    <meta property="og:description" content="{{ .Description | default .Site.Params.description }}">
+    <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Stylesheet -->
+    {{ $style := resources.Get "yuan/css/main.css" | resources.Minify }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body class="theme-dark">
+    <div class="layout">
+        <!-- Header -->
+        {{ partial "header.html" . }}
+        
+        <!-- Main Content -->
+        <main class="main">
+            {{ block "main" . }}{{ end }}
+        </main>
+        
+        <!-- Footer -->
+        {{ partial "footer.html" . }}
+    </div>
+    
+    <!-- JavaScript -->
+    {{ $js := resources.Get "yuan/js/main.js" | resources.Minify }}
+    <script src="{{ $js.Permalink }}"></script>
+    
+    <!-- Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <!-- Analytics -->
+    {{ if .Site.Params.googleAnalytics }}
+        {{ template "_internal/google_analytics.html" . }}
+    {{ end }}
+</body>
+</html>

@@ -1,0 +1,18 @@
+name = "Yuan"
+license = "MIT"
+licenselink = "https://github.com/e61983/blog/blob/main/LICENSE"
+description = "A minimalist tech blog theme designed for Yuan"
+homepage = "https://github.com/e61983/blog-theme"
+demosite = "https://e61983.github.io/"
+tags = ["blog", "tech", "dark", "responsive", "minimal"]
+features = ["responsive", "dark-mode", "syntax-highlighting", "toc"]
+min_version = "0.110.0"
+
+[author]
+  name = "Yuan"
+  homepage = "https://github.com/e61983"
+
+[original]
+  name = "Yuan"
+  homepage = "https://github.com/e61983"
+  repo = "https://github.com/e61983/blog-theme"

@@ -1,0 +1,107 @@
+{{ define "main" }}
+<div class="container">
+    <div class="post-layout">
+        <!-- Main Content Area -->
+        <article class="post">
+            <!-- Post Header -->
+            <header class="post-header">
+                <h1 class="post-title">{{ .Title }}</h1>
+                
+                <div class="post-meta">
+                    <time class="post-date" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                        {{ .Date.Format "2006年01月02日" }}
+                    </time>
+                    
+                    {{ if .Site.Params.showReadingTime }}
+                        <span class="reading-time">{{ .ReadingTime }} 分鐘閱讀</span>
+                    {{ end }}
+                    
+                    {{ if .Site.Params.showWordCount }}
+                        <span class="word-count">{{ .WordCount }} 字</span>
+                    {{ end }}
+                    
+                    {{ if .Params.author }}
+                        <span class="post-author">by {{ .Params.author }}</span>
+                    {{ end }}
+                </div>
+                
+                <!-- Tags -->
+                {{ if .Params.tags }}
+                    <div class="post-tags">
+                        {{ range .Params.tags }}
+                            <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="tag">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                {{ end }}
+                
+                <!-- Categories -->
+                {{ if .Params.categories }}
+                    <div class="post-categories">
+                        {{ range .Params.categories }}
+                            <a href="{{ "/categories/" | relURL }}{{ . | urlize }}" class="category">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                {{ end }}
+            </header>
+            
+            <!-- Mobile TOC Toggle -->
+            {{ if and .Site.Params.showTableOfContents .TableOfContents }}
+                <div class="mobile-toc-toggle">
+                    <button class="toc-toggle-btn" aria-label="顯示/隱藏目錄">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/>
+                        </svg>
+                        目錄
+                    </button>
+                    <nav class="mobile-toc">
+                        <h3 class="toc-title">目錄</h3>
+                        {{ .TableOfContents }}
+                    </nav>
+                </div>
+            {{ end }}
+            
+            <!-- Post Content -->
+            <div class="post-content">
+                {{ .Content }}
+            </div>
+            
+            <!-- Post Footer -->
+            <footer class="post-footer">
+                <!-- Navigation -->
+                <div class="post-nav">
+                    {{ with .PrevInSection }}
+                        <a href="{{ .Permalink }}" class="post-nav-prev">
+                            <span class="nav-label">上一篇</span>
+                            <span class="nav-title">{{ .Title }}</span>
+                        </a>
+                    {{ end }}
+                    
+                    {{ with .NextInSection }}
+                        <a href="{{ .Permalink }}" class="post-nav-next">
+                            <span class="nav-label">下一篇</span>
+                            <span class="nav-title">{{ .Title }}</span>
+                        </a>
+                    {{ end }}
+                </div>
+            </footer>
+        </article>
+        
+        <!-- Desktop Sidebar -->
+        {{ if and .Site.Params.showTableOfContents .TableOfContents }}
+            <aside class="post-sidebar">
+                <nav class="toc desktop-toc">
+                    <h3 class="toc-title">目錄</h3>
+                    {{ .TableOfContents }}
+                </nav>
+            </aside>
+        {{ end }}
+    </div>
+</div>
+
+<!-- Back to Top Button -->
+<button id="backToTop" class="back-to-top" aria-label="回到頂部">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+    </svg>
+</button>
+{{ end }}

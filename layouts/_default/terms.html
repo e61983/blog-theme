@@ -1,0 +1,66 @@
+{{ define "main" }}
+<div class="container">
+    <!-- Terms Header -->
+    <header class="page-header">
+        <h1 class="page-title">
+            {{ if eq .Type "categories" }}
+                所有分類
+            {{ else if eq .Type "tags" }}
+                所有標籤
+            {{ else }}
+                {{ .Title }}
+            {{ end }}
+        </h1>
+        
+        <p class="page-description">
+            {{ if eq .Type "categories" }}
+                瀏覽所有文章分類，快速找到您感興趣的技術領域
+            {{ else if eq .Type "tags" }}
+                瀏覽所有文章標籤，探索更多相關技術內容
+            {{ else }}
+                {{ .Description }}
+            {{ end }}
+        </p>
+    </header>
+    
+    <!-- Terms Grid -->
+    {{ if .Data.Terms }}
+        <section class="terms-section">
+            {{ if eq .Type "categories" }}
+                <div class="categories-grid">
+                    {{ range .Data.Terms.ByCount }}
+                        <a href="{{ .Page.Permalink }}" class="category-card">
+                            <h3 class="category-name">{{ .Page.Title }}</h3>
+                            <span class="category-count">{{ len .Pages }} 篇文章</span>
+                        </a>
+                    {{ end }}
+                </div>
+            {{ else if eq .Type "tags" }}
+                <div class="tags-cloud">
+                    {{ range .Data.Terms.ByCount }}
+                        {{ $weight := div (len .Pages) 5 }}
+                        {{ $weight := add $weight 1 }}
+                        <a href="{{ .Page.Permalink }}" class="tag-cloud-item" style="font-size: {{ add 1 (mul $weight 0.2) }}rem;">
+                            {{ .Page.Title }} 
+                            <span class="tag-count">({{ len .Pages }})</span>
+                        </a>
+                    {{ end }}
+                </div>
+            {{ else }}
+                <div class="terms-list">
+                    {{ range .Data.Terms.ByCount }}
+                        <a href="{{ .Page.Permalink }}" class="term-item">
+                            <span class="term-name">{{ .Page.Title }}</span>
+                            <span class="term-count">{{ len .Pages }}</span>
+                        </a>
+                    {{ end }}
+                </div>
+            {{ end }}
+        </section>
+    {{ else }}
+        <div class="empty-state">
+            <p>目前還沒有任何{{ if eq .Type "categories" }}分類{{ else }}標籤{{ end }}。</p>
+        </div>
+    {{ end }}
+</div>
+{{ end }}

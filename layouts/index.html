@@ -1,0 +1,60 @@
+{{ define "main" }}
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <!-- Avatar -->
+            {{ if .Site.Params.gravatarEmail }}
+            <div class="hero-avatar">
+                {{ if .Site.Params.linkedin }}
+                <a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener noreferrer" class="avatar-link">
+                {{ end }}
+                    <img src="https://www.gravatar.com/avatar/{{ md5 .Site.Params.gravatarEmail }}?s=120" 
+                         alt="{{ .Site.Params.author }}'s Avatar" 
+                         class="avatar-image">
+                {{ if .Site.Params.linkedin }}
+                </a>
+                {{ end }}
+            </div>
+            {{ end }}
+            
+            <!-- Tech Stack Icons -->
+            <div class="tech-stack">
+                <span class="tech-item">Go</span>
+                <span class="tech-item">Linux</span>
+                <span class="tech-item">Embedded</span>
+                <span class="tech-item">Backend</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Recent Posts -->
+    <section class="recent-posts">
+        <h2 class="section-title">最新文章</h2>
+        <div class="posts-grid">
+            {{ range (where .Site.RegularPages "Type" "posts" | first 6) }}
+                {{ partial "post-card.html" . }}
+            {{ end }}
+        </div>
+        
+        {{ if gt (len (where .Site.RegularPages "Type" "posts")) 6 }}
+            <div class="view-all">
+                <a href="/posts/" class="btn btn-primary">查看所有文章</a>
+            </div>
+        {{ end }}
+    </section>
+    
+    <!-- Categories -->
+    <section class="categories-section">
+        <h2 class="section-title">文章分類</h2>
+        <div class="categories-grid">
+            {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+                <a href="{{ "/categories/" | relURL }}{{ $name | urlize }}" class="category-card">
+                    <h3 class="category-name">{{ $name }}</h3>
+                    <span class="category-count">{{ len $taxonomy }} 篇文章</span>
+                </a>
+            {{ end }}
+        </div>
+    </section>
+</div>
+{{ end }}
