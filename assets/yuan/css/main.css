@@ -253,8 +253,8 @@ pre code {
   line-height: 1.6;
 }
 
-/* Language label */
-.highlight::before {
+/* Language label - using JavaScript to set content */
+.highlight[data-lang]::before {
   content: attr(data-lang);
   position: absolute;
   top: var(--space-3);
@@ -273,6 +273,13 @@ pre code {
   z-index: 1;
   pointer-events: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-fast);
+}
+
+/* Move language tag on hover for better UX */
+.highlight:hover[data-lang]::before {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Mobile responsiveness */
@@ -286,17 +293,22 @@ pre code {
   
   .highlight pre {
     padding: var(--space-3) var(--space-4);
-    font-size: calc(var(--font-size-sm) * 0.9);
+    font-size: calc(var(--font-size-sm) * 0.5);
     line-height: 1.5;
   }
   
   /* Line numbers handled by chroma.css */
   
-  .highlight::before {
+  .highlight[data-lang]::before {
     top: var(--space-2);
     right: var(--space-2);
     padding: 2px var(--space-1);
     font-size: 10px;
+  }
+  
+  .highlight:hover[data-lang]::before {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -1418,10 +1430,10 @@ figcaption {
 /* ===== Code Copy Button ===== */
 .copy-button {
   position: absolute;
-  top: var(--space-3);
+  bottom: var(--space-3);
   right: var(--space-3);
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1432,7 +1444,7 @@ figcaption {
   border-radius: var(--radius-lg);
   cursor: pointer;
   opacity: 0;
-  transform: translateY(-4px);
+  transform: translateY(8px);
   transition: all var(--transition-normal);
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -1449,7 +1461,7 @@ pre:hover .copy-button {
   color: var(--color-text-inverse);
   border-color: transparent;
   box-shadow: 0 8px 24px rgba(100, 255, 218, 0.4);
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-4px) scale(1.08);
 }
 
 .copy-button:active {
@@ -1485,6 +1497,35 @@ pre:hover .copy-button {
 
 .copy-button:hover svg {
   transform: scale(1.15);
+}
+
+/* Responsive adjustments for copy button */
+@media (max-width: 768px) {
+  .copy-button {
+    width: 40px;
+    height: 40px;
+    bottom: var(--space-2);
+    right: var(--space-2);
+  }
+  
+  .copy-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .copy-button {
+    width: 36px;
+    height: 36px;
+    bottom: var(--space-2);
+    right: var(--space-2);
+  }
+  
+  .copy-button svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* ===== Reading Progress ===== */

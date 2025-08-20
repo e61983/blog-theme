@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Code Block Copy Button
     addCopyButtonsToCodeBlocks();
     
+    // Language Tags for Code Blocks
+    initLanguageTags();
+    
     // Table of Contents Smooth Scrolling and Mobile Toggle
     initTableOfContents();
     initMobileTocToggle();
@@ -364,4 +367,22 @@ function initReadingProgress() {
     
     window.addEventListener('scroll', updateProgress);
     updateProgress();
+}
+
+// Initialize language tags for code blocks
+function initLanguageTags() {
+    // Find all code blocks with data-lang attribute
+    const codeBlocks = document.querySelectorAll('.highlight code[data-lang]');
+    
+    codeBlocks.forEach(function(codeBlock) {
+        const highlight = codeBlock.closest('.highlight');
+        const language = codeBlock.getAttribute('data-lang');
+        
+        if (highlight && language) {
+            // Copy the data-lang attribute to the highlight container
+            highlight.setAttribute('data-lang', language);
+            
+            console.log('Language tag set:', language, 'for highlight container');
+        }
+    });
 }
