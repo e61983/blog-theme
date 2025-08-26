@@ -66,6 +66,8 @@
     <script src="{{ $js.Permalink }}"></script>
     
     <!-- Analytics -->
+    {{ if eq hugo.Environment "production" }}
     {{ partial "analytics.html" . }}
+    {{ end }}
 </body>
 </html>
