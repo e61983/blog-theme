@@ -1,0 +1,22 @@
+{{- /* Google Analytics 檢測和啟用 */ -}}
+{{- if .Site.Params.googleAnalytics -}}
+{{- $trackingId := .Site.Params.googleAnalytics -}}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ $trackingId }}"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', '{{ $trackingId }}', {
+        // 啟用增強測量功能
+        send_page_view: true,
+        // 保護隱私設定
+        anonymize_ip: true,
+        // 防止 Google Ads 追蹤
+        allow_google_signals: false,
+        // 防止廣告個人化
+        allow_ad_personalization_signals: false
+    });
+</script>
+{{- end -}}

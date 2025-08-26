@@ -66,8 +66,6 @@
     <script src="{{ $js.Permalink }}"></script>
     
     <!-- Analytics -->
-    {{ if .Site.Params.googleAnalytics }}
-        {{ template "_internal/google_analytics.html" . }}
-    {{ end }}
+    {{ partial "analytics.html" . }}
 </body>
 </html>
